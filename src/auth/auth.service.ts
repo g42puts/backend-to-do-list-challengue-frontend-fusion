@@ -62,7 +62,7 @@ export class AuthService {
   }
 
   async profile(accessToken: string) {
-    return await this.userService.findByToken(accessToken);
+    return await this.userService.findByToken(accessToken, false);
   }
 
   private getNewToken(payload: { sub: string; username: string }): string {

@@ -6,8 +6,6 @@ import {
 } from '@nestjs/common';
 import { Model } from 'mongoose';
 
-import * as bcrypt from 'bcrypt';
-
 import { CreateUser, IUser, UserWithoutPassword } from './types';
 
 @Injectable()
@@ -19,7 +17,6 @@ export class UserSerivce {
 
   async create(newUser: CreateUser): Promise<CreateUser> {
     const user = await this.userModel.findOne({ email: newUser.email }).exec();
-    console.log(user);
     if (user) throw new InternalServerErrorException();
 
     return await this.userModel.create(newUser);
@@ -36,11 +33,15 @@ export class UserSerivce {
     return await this.userModel.find({}, { password: false }).exec();
   }
 
-  async findByToken(accessToken: string): Promise<UserWithoutPassword> {
-    return await this.userModel.findOne(
-      { accessToken: accessToken },
-      { password: false, accessToken: false },
-    );
+  async findByToken(
+    accessToken: string,
+    getAccessToken?: false,
+  ): Promise<UserWithoutPassword> {
+    const ignore = {} as { password?: boolean; accessToken?: boolean };
+    ignore.password = false;
+    if (getAccessToken) ignore.accessToken = getAccessToken;
+
+    return await this.userModel.findOne({ accessToken: accessToken }, ignore);
   }
 
   async updateAccessToken(id: string, accessToken: string) {
