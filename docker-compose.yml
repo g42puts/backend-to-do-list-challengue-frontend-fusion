@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: backend-todo-list-frontend-fusion
+    restart: always
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    command: >
+      sh -c "npm install &&
+      npm run build &&
+      npm run start:prod"

@@ -4,6 +4,6 @@ export const tasksProviders = [
   {
     provide: 'DATABASE_CONNECTION',
     useFactory: (): Promise<typeof mongoose> =>
-      mongoose.connect('mongodb+srv://gilmarneo:tWktv2wtQrdxRXMG@clustertester.qs0gqkz.mongodb.net/gilmarneo'),
+      mongoose.connect(process.env.DATABASE_URL),
   },
 ];
