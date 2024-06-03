@@ -41,6 +41,7 @@ export class AuthController {
   @Post('signup')
   async create(@Body() body: CreateUser) {
     try {
+      console.log(body)
       const data = await this.authService.create(body);
       return new ServerResponse(200, 'Successfully sign up!', data);
     } catch (err: any) {

@@ -7,4 +7,6 @@ export interface ITask {
   last_update: String;
 }
 
-export interface ITaskWithoutId extends Omit<ITask, '_id'> {}
+export interface CreateTask extends Omit<ITask, '_id' | 'last_update' | 'created_at'> {}
+
+export interface UpdateTask extends CreateTask {}

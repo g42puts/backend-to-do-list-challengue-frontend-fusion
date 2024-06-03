@@ -30,7 +30,7 @@ export class UserSerivce {
   }
 
   async findAll(): Promise<UserWithoutPassword[]> {
-    return await this.userModel.find({}, { password: false }).exec();
+    return await this.userModel.find({}, { password: false, accessToken: false }).exec();
   }
 
   async findByToken(
